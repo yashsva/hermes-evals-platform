@@ -1,0 +1,44 @@
+{
+  "key": "control-json-object",
+  "name": "Control: JSON object",
+  "spec": {
+    "prompt": "Return a JSON object with \"name\" set to \"widget\" and \"qty\" set to 3. Output only the JSON.",
+    "tags": [
+      "control"
+    ],
+    "files": [],
+    "checks": [
+      {
+        "name": "name = widget",
+        "type": "json",
+        "target": {
+          "kind": "answer"
+        },
+        "field": "name",
+        "equals": "widget",
+        "weight": 1
+      },
+      {
+        "name": "qty = 3",
+        "type": "json",
+        "target": {
+          "kind": "answer"
+        },
+        "field": "qty",
+        "equals": 3,
+        "weight": 1
+      },
+      {
+        "name": "Only JSON",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "^\\s*(```(json)?\\s*)?\\{[\\s\\S]*\\}\\s*(```)?\\s*$",
+        "weight": 1
+      }
+    ],
+    "passThreshold": 1,
+    "timeoutSec": 90
+  }
+}

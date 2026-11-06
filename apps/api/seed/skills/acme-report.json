@@ -1,0 +1,8 @@
+{
+  "key": "acme-report",
+  "name": "ACME report format",
+  "spec": {
+    "description": "How to answer questions about ACME Corp data: the ACME-REPORT v2 block, evidence citation and value formats.",
+    "body": "# ACME report format (v2)\n\nUse this whenever a question asks for an \"ACME report\" or is about ACME Corp documents in the workspace.\n\n## Procedure\n\n1. Find the answer in the workspace files. Read them with your file tools — never guess.\n2. Note the file and the 1-based line number of the line that supports the answer.\n3. Reply with exactly this block and nothing else:\n\n```\nACME-REPORT v2\nANSWER: <answer, formatted per the rules below>\nEVIDENCE: <file path>:<line number> \"<exact text of that line>\"\nCONFIDENCE: <HIGH|MEDIUM|LOW>\nEND-REPORT\n```\n\n## Value formats\n\n- **Money:** ISO currency code, a space, the amount with exactly two decimals and no thousands separators. `$1,234.5` → `USD 1234.50`; €12 → `EUR 12.00`.\n- **Dates:** ISO 8601 `YYYY-MM-DD`. \"March 7, 2026\" → `2026-03-07`.\n- **People:** `LASTNAME, Firstname` with the last name in capitals. \"Ada Lovelace\" → `LOVELACE, Ada`.\n- **Identifiers** (invoice ids, ticket ids): exactly as written in the source.\n\n## Confidence\n\n- HIGH: the evidence line states the answer directly.\n- MEDIUM: the answer needed a calculation over several lines (cite the first line used).\n- LOW: anything else.\n\nDo not use this format for questions that are not about ACME data.\n"
+  }
+}

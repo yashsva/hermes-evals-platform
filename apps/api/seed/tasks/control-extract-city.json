@@ -1,0 +1,34 @@
+{
+  "key": "control-extract-city",
+  "name": "Control: extract a city",
+  "spec": {
+    "prompt": "Extract the city from this sentence: \"The shipment left Rotterdam on Tuesday morning.\" Reply with only the city name.",
+    "tags": [
+      "control"
+    ],
+    "files": [],
+    "checks": [
+      {
+        "name": "Names the city",
+        "type": "contains",
+        "target": {
+          "kind": "answer"
+        },
+        "value": "Rotterdam",
+        "weight": 2,
+        "required": true
+      },
+      {
+        "name": "Only the city",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "^\\W*Rotterdam\\W*$",
+        "weight": 1
+      }
+    ],
+    "passThreshold": 1,
+    "timeoutSec": 90
+  }
+}

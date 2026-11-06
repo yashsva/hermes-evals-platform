@@ -1,0 +1,57 @@
+{
+  "key": "acme-refund-total",
+  "name": "ACME: January refund total",
+  "spec": {
+    "prompt": "Prepare an ACME report: what is the total of all refunds issued in January 2026? The list is in billing/refunds.txt.",
+    "tags": [
+      "acme"
+    ],
+    "files": [
+      {
+        "path": "billing/refunds.txt",
+        "content": "Refunds issued in January 2026 (EUR)\nR-881  Hansen GmbH      120.00\nR-882  Lopez SA          95.50\nR-883  Novak s.r.o.     124.75\n"
+      }
+    ],
+    "checks": [
+      {
+        "name": "Correct value (any format)",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "340[.,]25",
+        "weight": 2
+      },
+      {
+        "name": "ACME-REPORT v2 block",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ACME-REPORT v2[\\s\\S]*END-REPORT",
+        "weight": 1
+      },
+      {
+        "name": "ANSWER uses ACME value format",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ANSWER:\\s*EUR 340\\.25\\s*$",
+        "flags": "m",
+        "weight": 1
+      },
+      {
+        "name": "EVIDENCE cites file and line",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "EVIDENCE:\\s*\\S*refunds\\.txt:[2-4]\\b",
+        "weight": 1
+      }
+    ],
+    "passThreshold": 1,
+    "timeoutSec": 180
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "key": "control-arithmetic",
+  "name": "Control: arithmetic",
+  "spec": {
+    "prompt": "What is 17 × 23? Reply with just the number.",
+    "tags": [
+      "control"
+    ],
+    "files": [],
+    "checks": [
+      {
+        "name": "Correct product",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "\\b391\\b",
+        "weight": 2,
+        "required": true
+      },
+      {
+        "name": "Just the number",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "^\\s*391\\.?\\s*$",
+        "weight": 1
+      }
+    ],
+    "passThreshold": 1,
+    "timeoutSec": 90
+  }
+}

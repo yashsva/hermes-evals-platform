@@ -1,0 +1,58 @@
+{
+  "key": "acme-project-owner",
+  "name": "ACME: project owner",
+  "spec": {
+    "prompt": "Prepare an ACME report: who owns project Helios? The roster is in team/roster.md.",
+    "tags": [
+      "acme"
+    ],
+    "files": [
+      {
+        "path": "team/roster.md",
+        "content": "# ACME project roster\n| Project | Owner | Since |\n|---|---|---|\n| Atlas | Marco Bianchi | 2025 |\n| Helios | Priya Raman | 2024 |\n| Nimbus | Tom Okafor | 2026 |\n"
+      }
+    ],
+    "checks": [
+      {
+        "name": "Correct value (any format)",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "Priya|Raman",
+        "flags": "i",
+        "weight": 2
+      },
+      {
+        "name": "ACME-REPORT v2 block",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ACME-REPORT v2[\\s\\S]*END-REPORT",
+        "weight": 1
+      },
+      {
+        "name": "ANSWER uses ACME value format",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ANSWER:\\s*RAMAN, Priya\\s*$",
+        "flags": "m",
+        "weight": 1
+      },
+      {
+        "name": "EVIDENCE cites file and line",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "EVIDENCE:\\s*\\S*roster\\.md:5\\b",
+        "weight": 1
+      }
+    ],
+    "passThreshold": 1,
+    "timeoutSec": 180
+  }
+}

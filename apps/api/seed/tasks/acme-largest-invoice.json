@@ -1,0 +1,58 @@
+{
+  "key": "acme-largest-invoice",
+  "name": "ACME: largest invoice",
+  "spec": {
+    "prompt": "Prepare an ACME report: which January 2026 invoice has the largest amount? Answer with the invoice id. Data: billing/invoices.csv.",
+    "tags": [
+      "acme"
+    ],
+    "files": [
+      {
+        "path": "billing/invoices.csv",
+        "content": "invoice_id,customer,amount_usd,date\nINV-1039,Northwind,1250.00,2026-01-04\nINV-1040,Contoso,980.40,2026-01-09\nINV-1041,Fabrikam,2210.10,2026-01-15\nINV-1042,Tailspin,4875.00,2026-01-21\nINV-1043,Litware,3120.99,2026-01-28\n"
+      }
+    ],
+    "checks": [
+      {
+        "name": "Correct value (any format)",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "INV-1042",
+        "flags": "i",
+        "weight": 2
+      },
+      {
+        "name": "ACME-REPORT v2 block",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ACME-REPORT v2[\\s\\S]*END-REPORT",
+        "weight": 1
+      },
+      {
+        "name": "ANSWER uses ACME value format",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ANSWER:\\s*INV-1042\\s*$",
+        "flags": "m",
+        "weight": 1
+      },
+      {
+        "name": "EVIDENCE cites file and line",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "EVIDENCE:\\s*\\S*invoices\\.csv:5\\b",
+        "weight": 1
+      }
+    ],
+    "passThreshold": 1,
+    "timeoutSec": 180
+  }
+}

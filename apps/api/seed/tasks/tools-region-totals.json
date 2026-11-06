@@ -1,0 +1,53 @@
+{
+  "key": "tools-region-totals",
+  "name": "Tools: CSV region totals",
+  "spec": {
+    "prompt": "data/sales.csv lists sales by region. Compute the total amount per region and write them to totals.json in the workspace root as a JSON object mapping region name to total, e.g. {\"north\": 1.5}.",
+    "tags": [
+      "tools"
+    ],
+    "files": [
+      {
+        "path": "data/sales.csv",
+        "content": "region,rep,amount\nnorth,Ana,1200.50\nsouth,Ben,830.00\nnorth,Caro,410.25\nwest,Dev,975.00\nsouth,Eli,1290.75\nwest,Fay,224.00\nnorth,Gus,99.25\n"
+      }
+    ],
+    "checks": [
+      {
+        "name": "north total",
+        "type": "json",
+        "target": {
+          "kind": "file",
+          "path": "totals.json"
+        },
+        "field": "north",
+        "equals": 1710,
+        "weight": 1
+      },
+      {
+        "name": "south total",
+        "type": "json",
+        "target": {
+          "kind": "file",
+          "path": "totals.json"
+        },
+        "field": "south",
+        "equals": 2120.75,
+        "weight": 1
+      },
+      {
+        "name": "west total",
+        "type": "json",
+        "target": {
+          "kind": "file",
+          "path": "totals.json"
+        },
+        "field": "west",
+        "equals": 1199,
+        "weight": 1
+      }
+    ],
+    "passThreshold": 1,
+    "timeoutSec": 180
+  }
+}

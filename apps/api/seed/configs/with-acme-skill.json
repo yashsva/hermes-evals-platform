@@ -1,0 +1,20 @@
+{
+  "key": "with-acme-skill",
+  "name": "Baseline + ACME skill",
+  "spec": {
+    "provider": "openrouter",
+    "model": "anthropic/claude-haiku-5.5",
+    "toolsets": [
+      "file",
+      "terminal"
+    ],
+    "skills": [
+      "acme-report"
+    ],
+    "memory": {
+      "enabled": false,
+      "entries": []
+    },
+    "maxTurns": 8
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "key": "acme-q3-emea-revenue",
+  "name": "ACME: Q3 EMEA revenue",
+  "spec": {
+    "prompt": "Prepare an ACME report: what was EMEA revenue in Q3 2026? The figures are in finance/q3.txt.",
+    "tags": [
+      "acme"
+    ],
+    "files": [
+      {
+        "path": "finance/q3.txt",
+        "content": "ACME Corp — Q3 2026 regional results (unaudited)\nAmericas revenue Q3: $2,018,300.00\nEMEA revenue Q3: $1,234,500.00\nAPAC revenue Q3: $987,250.00\nPrepared by: Finance Ops\n"
+      }
+    ],
+    "checks": [
+      {
+        "name": "Correct value (any format)",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "1,?234,?500",
+        "flags": "i",
+        "weight": 2
+      },
+      {
+        "name": "ACME-REPORT v2 block",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ACME-REPORT v2[\\s\\S]*END-REPORT",
+        "weight": 1
+      },
+      {
+        "name": "ANSWER uses ACME value format",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ANSWER:\\s*USD 1234500\\.00\\s*$",
+        "flags": "m",
+        "weight": 1
+      },
+      {
+        "name": "EVIDENCE cites file and line",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "EVIDENCE:\\s*\\S*q3\\.txt:3\\b",
+        "weight": 1
+      }
+    ],
+    "passThreshold": 1,
+    "timeoutSec": 180
+  }
+}

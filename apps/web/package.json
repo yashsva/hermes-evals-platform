@@ -1,0 +1,24 @@
+{
+  "name": "@evals/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "echo 'web: no unit tests (covered by API integration tests)'"
+  },
+  "dependencies": {
+    "@evals/shared": "workspace:*",
+    "vue": "3.5.22",
+    "vue-router": "4.6.4",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "5.2.4",
+    "typescript": "5.9.3",
+    "vite": "6.4.5",
+    "vue-tsc": "2.2.12"
+  }
+}

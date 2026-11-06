@@ -1,0 +1,47 @@
+name: agent-evals
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: evals
+      POSTGRES_PASSWORD: evals
+      POSTGRES_DB: evals
+    # Host port 5433 so an existing local Postgres on 5432 keeps working.
+    ports: ["${DB_PORT:-5433}:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U evals -d evals"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgres://evals:evals@db:5432/evals
+      PORT: "3001"
+      # Hermes may only write under /opt/data (HERMES_WRITE_SAFE_ROOT in the base image).
+      TRIALS_ROOT: /opt/data/trials
+      WEB_DIST: /app/apps/web/dist
+    ports: ["${APP_PORT:-3001}:3001"]
+    # Node is not an init system: tini reaps orphaned processes Hermes leaves behind.
+    init: true
+    depends_on:
+      db:
+        condition: service_healthy
+    # The agent runs shell commands with --yolo; the container is its sandbox, so cap what it can use.
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 4g
+    restart: unless-stopped
+
+volumes:
+  pgdata:

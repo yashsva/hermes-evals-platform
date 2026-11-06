@@ -1,0 +1,22 @@
+{
+  "key": "with-memory",
+  "name": "Baseline + memory",
+  "spec": {
+    "provider": "openrouter",
+    "model": "anthropic/claude-haiku-5.5",
+    "toolsets": [
+      "file",
+      "terminal",
+      "memory"
+    ],
+    "skills": [],
+    "memory": {
+      "enabled": true,
+      "entries": [
+        "The user works in ACME Finance Ops and prefers short answers.",
+        "ACME fiscal quarters follow the calendar year (Q3 = July–September)."
+      ]
+    },
+    "maxTurns": 8
+  }
+}

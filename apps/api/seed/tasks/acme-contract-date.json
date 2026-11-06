@@ -1,0 +1,58 @@
+{
+  "key": "acme-contract-date",
+  "name": "ACME: contract signing date",
+  "spec": {
+    "prompt": "Prepare an ACME report: on what date was the Globex Logistics vendor agreement signed? See contracts/globex.md.",
+    "tags": [
+      "acme"
+    ],
+    "files": [
+      {
+        "path": "contracts/globex.md",
+        "content": "# Vendor agreement: Globex Logistics\n\nParties: ACME Corp and Globex Logistics Ltd.\nTerm: 24 months.\nThis agreement was signed on March 7, 2026 by both parties.\nRenewal requires 60 days notice.\n"
+      }
+    ],
+    "checks": [
+      {
+        "name": "Correct value (any format)",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "March 7|2026-03-07|7 March",
+        "flags": "i",
+        "weight": 2
+      },
+      {
+        "name": "ACME-REPORT v2 block",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ACME-REPORT v2[\\s\\S]*END-REPORT",
+        "weight": 1
+      },
+      {
+        "name": "ANSWER uses ACME value format",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ANSWER:\\s*2026-03-07\\s*$",
+        "flags": "m",
+        "weight": 1
+      },
+      {
+        "name": "EVIDENCE cites file and line",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "EVIDENCE:\\s*\\S*globex\\.md:5\\b",
+        "weight": 1
+      }
+    ],
+    "passThreshold": 1,
+    "timeoutSec": 180
+  }
+}

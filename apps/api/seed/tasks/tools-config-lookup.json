@@ -1,0 +1,39 @@
+{
+  "key": "tools-config-lookup",
+  "name": "Tools: config lookup",
+  "spec": {
+    "prompt": "Which port does the billing service listen on, according to config/services.yaml? Reply with just the port number.",
+    "tags": [
+      "tools"
+    ],
+    "files": [
+      {
+        "path": "config/services.yaml",
+        "content": "services:\n  auth:\n    port: 8080\n  billing:\n    port: 8443\n  search:\n    port: 9200\n"
+      }
+    ],
+    "checks": [
+      {
+        "name": "Correct port",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "\\b8443\\b",
+        "weight": 2,
+        "required": true
+      },
+      {
+        "name": "Just the number",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "^\\s*8443\\.?\\s*$",
+        "weight": 1
+      }
+    ],
+    "passThreshold": 1,
+    "timeoutSec": 120
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "key": "baseline",
+  "name": "Baseline",
+  "spec": {
+    "provider": "openrouter",
+    "model": "anthropic/claude-haiku-5.5",
+    "toolsets": [
+      "file",
+      "terminal"
+    ],
+    "skills": [],
+    "memory": {
+      "enabled": false,
+      "entries": []
+    },
+    "maxTurns": 8
+  }
+}

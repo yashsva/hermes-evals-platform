@@ -1,0 +1,58 @@
+{
+  "key": "acme-outage-date",
+  "name": "ACME: outage start date",
+  "spec": {
+    "prompt": "Prepare an ACME report: on what date did the outage begin? Use ops/incident.log.",
+    "tags": [
+      "acme"
+    ],
+    "files": [
+      {
+        "path": "ops/incident.log",
+        "content": "[ops] Monitoring alert acknowledged\n[ops] Outage began Saturday 14 Feb 2026 at 09:12 UTC\n[ops] Root cause: expired TLS certificate\n[ops] Service restored 14 Feb 2026 10:03 UTC\n"
+      }
+    ],
+    "checks": [
+      {
+        "name": "Correct value (any format)",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "14 Feb|Feb(ruary)? 14|2026-02-14",
+        "flags": "i",
+        "weight": 2
+      },
+      {
+        "name": "ACME-REPORT v2 block",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ACME-REPORT v2[\\s\\S]*END-REPORT",
+        "weight": 1
+      },
+      {
+        "name": "ANSWER uses ACME value format",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "ANSWER:\\s*2026-02-14\\s*$",
+        "flags": "m",
+        "weight": 1
+      },
+      {
+        "name": "EVIDENCE cites file and line",
+        "type": "regex",
+        "target": {
+          "kind": "answer"
+        },
+        "pattern": "EVIDENCE:\\s*\\S*incident\\.log:2\\b",
+        "weight": 1
+      }
+    ],
+    "passThreshold": 1,
+    "timeoutSec": 180
+  }
+}
