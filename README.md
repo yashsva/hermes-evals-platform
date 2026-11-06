@@ -6,6 +6,8 @@ It runs [Hermes Agent](https://github.com/NousResearch/hermes-agent) on a set of
 
 Stack: NestJS + Vue 3 + TypeScript, Postgres, Hermes Agent v0.22.7 (pinned image).
 
+**Walkthrough video:** [watch on Google Drive](https://drive.google.com/file/d/1568O2U7wxqL92ynGK37-JG0ua5kRXoOa/view?usp=sharing)
+
 ## Quick start
 
 Requirements: Docker (Desktop) with ~4 GB memory, and an [OpenRouter](https://openrouter.ai/keys) API key.
